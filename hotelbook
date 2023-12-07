@@ -261,9 +261,9 @@ namespace HotelBookingProgram
                 retry = char.Parse(Console.ReadLine());
             }while(retry == 'y');
 
-        if (retry == 'n');
+        if (retry != 'n');
         {
-            Console.WriteLine("\nThank you for choosing Bigtas Hotel, have a nice stay!\n");
+            showguidelines(); // binago koto
         }
             
         }
@@ -275,7 +275,8 @@ namespace HotelBookingProgram
             Console.WriteLine("3. Paypal");
 
             int choice = int.Parse(Console.ReadLine());
-            do {
+            do 
+            {
                 Console.Write("Enter the number of your payment method choice: ");
             }
             while (choice < 1 || choice > 3);
@@ -329,6 +330,24 @@ namespace HotelBookingProgram
             Console.WriteLine($"GCash Payment successful! Total amount charged: ${total:F2}\n");
             Console.ReadKey();
         }
+
+        static void showguidelines()
+        {
+            // gaaaaaaaaaaaaaaaaa
+            Console.WriteLine("Thank you for booking a room with us!");
+            Console.WriteLine("Here are some guidelines to make your stay enjoyable:");
+            Console.WriteLine("- Check-in time is ating ang gabing itoooo");
+            Console.WriteLine("- Pets are not allowed in the rooms.");
+            Console.WriteLine("- Smoking is prohibited in all indoor areas.");
+            Console.WriteLine("- Room service is available 24/7.");
+            Console.WriteLine("- To call for Room service press the dedicated button on the telephone labeled Room Service");
+            Console.WriteLine("- In case of any emergency, dial 911.");
+
+            Console.WriteLine("\nThank you for choosing Bigtas Hotel, have a nice stay!\n");
+        }
+
+
+
         //  check in ,check out date
         //  child and adult rates
         //  room limits
