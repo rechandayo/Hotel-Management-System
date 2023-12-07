@@ -287,10 +287,12 @@ namespace HotelBookingProgram
         static string paymentMethod()
         {
             Console.Clear();
-            Console.Write("Select Payment Method: ");
-            Console.WriteLine("\n1. Card");
+            
+            Console.WriteLine("1. Card");
             Console.WriteLine("2. Gcash");
             Console.WriteLine("3. Paypal");
+
+            Console.Write("Select Payment Method: ");
 
             int choice = int.Parse(Console.ReadLine());
             do {
@@ -354,6 +356,7 @@ namespace HotelBookingProgram
         static void showguidelines()
         {
             Console.Clear();
+
             Console.WriteLine("\nHere are some guidelines to make your stay enjoyable:");
             Console.WriteLine("\n- Check-in time is ating ang gabing itoooo");
             Console.WriteLine("- Pets are not allowed in the rooms.");
@@ -369,7 +372,7 @@ namespace HotelBookingProgram
         {
             Console.Clear();
             Console.WriteLine("Here are our offers : \nSS1, SS2, SS3, SS4, SS5 \n Standard Suites (500 php per head for 24hrs)");
-            Console.WriteLine("It includes : \n A living area \n A bedroom with queen-sized bed \n A bathroom with a shower");
+            Console.WriteLine("It includes : A living area, A bedroom with queen-sized bed, A bathroom with a shower");
 
             Console.WriteLine("\n\n\nNavigation Options:");
             Console.WriteLine("1. Next Page");
@@ -378,8 +381,8 @@ namespace HotelBookingProgram
         static void desc2()
         {
             Console.Clear();
-            Console.WriteLine("MS1, MS2, MS3, MS4, MS5 \n Mini Suite (800 php per head for 24hrs)");
-            Console.WriteLine("Separate living area \n A bedroom with king-sized bed \n A spacious bathroom with a bathtub and shower \n Work desk \n High-speed internet \n Flat screen TV \n");
+            Console.WriteLine("MS1, MS2, MS3, MS4, MS5 \nMini Suite (800 php per head for 24hrs)");
+            Console.WriteLine("Separate living area, A bedroom with king-sized bed, A spacious bathroom with a bathtub and shower, Work desk, High-speed internet, Flat screen TV");
 
             Console.WriteLine("\n\n\nNavigation Options:");
             Console.WriteLine("1. Next Page");
@@ -390,8 +393,8 @@ namespace HotelBookingProgram
         static void desc3()
         {
             Console.Clear();
-            Console.WriteLine("BS1, BS2, BS3, BS4, BS5 \n Bridal Suites (1000 php per head for 24hrs)");
-            Console.WriteLine("Romantic ambiance with a king-sized bed \n A spacious bathroom with a Jacuzzi tub \n A separate living area \n Champagne \n Chocolates \n Other romantic touches");
+            Console.WriteLine("BS1, BS2, BS3, BS4, BS5 \nBridal Suites (1000 php per head for 24hrs)");
+            Console.WriteLine("Romantic ambiance with a king-sized bed, A spacious bathroom with a Jacuzzi tub, A separate living area, Champagne, Chocolates, Other romantic touches");
 
             Console.WriteLine("\n\n\nNavigation Options:");
             Console.WriteLine("1. Next Page");
@@ -401,8 +404,8 @@ namespace HotelBookingProgram
         static void desc4()
         {
             Console.Clear();
-            Console.WriteLine("HS1, HS2, HS3, HS4, HS5 \n Honeymoon Suite (1500 php per head for 24hrs)");
-            Console.WriteLine("Four-poster bed \n A private balcony with a view \n A spacious bathroom with a Jacuzzi tub \n Bottle of champagne \n Rose petals \n Other romantic amenities \n ");
+            Console.WriteLine("HS1, HS2, HS3, HS4, HS5 \nHoneymoon Suite (1500 php per head for 24hrs)");
+            Console.WriteLine("Four-poster bed, A private balcony with a view, A spacious bathroom with a Jacuzzi tub, Bottle of champagne, Rose petals, Other romantic amenities");
 
             Console.WriteLine("\n\n\nNavigation Options:");
             Console.WriteLine("1. Next Page");
@@ -412,8 +415,8 @@ namespace HotelBookingProgram
         static void desc5()
         {
             Console.Clear();
-            Console.WriteLine("PS1, PS2, PS3, PS4, PS5 \n Presidential Suite (2000 php per head for 24hrs)");
-            Console.WriteLine("A separate living area \n A dining area \n A bedroom with a king-sized bed \n A spacious bathroom with a Jacuzzi tub \n Private balcony with a view \n A fully equipped kitchen \n A butler service");
+            Console.WriteLine("PS1, PS2, PS3, PS4, PS5 \nPresidential Suite (2000 php per head for 24hrs)");
+            Console.WriteLine("A separate living area, A dining area, A bedroom with a king-sized bed, A spacious bathroom with a Jacuzzi tub, Private balcony with a view, A fully equipped kitchen, A butler service");
 
             Console.WriteLine("\n\n\nNavigation Options:");
             Console.WriteLine("2. Previous Page");
@@ -433,5 +436,5 @@ namespace HotelBookingProgram
         //  gagawing arrays
         //  
         
-    }   // di maganda itsura nung description pag naka internal console di ko alam kung bakit pero maayos naman sa external
+    }
 }
