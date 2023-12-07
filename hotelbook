@@ -1,0 +1,267 @@
+using System;
+using System.Collections.Generic;
+
+class HotelBookingProgram
+{
+    static Dictionary<int, bool> roomAvailability = new Dictionary<int, bool>
+    {
+        {1, true}, // Standard
+        {2, true}, // Deluxe
+        {3, true}  // Suite
+    };
+
+    static Dictionary<int, string> roomReservations = new Dictionary<int, string>();
+
+    static void Main()
+    {
+        Console.WriteLine("Welcome to German Hotels!");
+
+        string[] roomTypes = { "Standard", "Deluxe", "Suite" };
+        double[] roomPrices = { 100.00, 150.00, 200.00 };
+
+        Console.WriteLine("\nRoom Rates:");
+        for (int i = 0; i < roomTypes.Length; i++)
+        {
+            Console.WriteLine($"{i + 1}. {roomTypes[i]}: ${roomPrices[i]:F2} per night");
+        }
+
+        int selectedRoomIndex = GetRoomType(roomTypes);
+
+
+        if (ReserveRoom(selectedRoomIndex + 1))
+        {
+            int numberOfNights = GetNumberOfNights();
+
+            string guestName = GetGuestName();
+
+            int age = GetAge();
+
+            string address = GetAddress();
+
+            string contactNumber = GetContactNumber();
+
+            string emailAddress = GetEmailAddress();
+
+            string selectedBranch = GetBranch();
+
+            string reservationTime = GetReservationTime();
+
+            double totalCost = roomPrices[selectedRoomIndex] * numberOfNights;
+
+            DisplayReceipt(guestName, age, address, contactNumber, emailAddress, selectedBranch, roomTypes[selectedRoomIndex], roomPrices[selectedRoomIndex], numberOfNights, totalCost, reservationTime);
+
+            string paymentMethod = GetPaymentMethod();
+
+            if (paymentMethod == "CreditCard")
+            {
+                ProcessCreditCardPayment(totalCost);
+            }
+            else if (paymentMethod == "PayPal")
+            {
+                ProcessPayPalPayment(totalCost);
+            }
+            else if (paymentMethod == "GCash")
+            {
+                ProcessGCashPayment(totalCost);
+            }
+        }
+        else
+        {
+            Console.WriteLine("Sorry, the selected room is not available. Please try again later.");
+        }
+
+        Console.WriteLine("Thank you for booking at German Hotels!");
+    }
+
+    static int GetRoomType(string[] roomTypes)
+    {
+        Console.WriteLine("\nSelect a room type:");
+
+        for (int i = 0; i < roomTypes.Length; i++)
+        {
+            Console.WriteLine($"{i + 1}. {roomTypes[i]}");
+        }
+
+        int choice;
+        do
+        {
+            Console.Write("Enter the number of your choice: ");
+        } while (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > roomTypes.Length);
+
+        return choice - 1;
+    }
+
+    static bool ReserveRoom(int roomType)
+    {
+        if (roomAvailability.ContainsKey(roomType) && roomAvailability[roomType])
+        {
+            roomAvailability[roomType] = false;
+            Console.WriteLine($"Room {roomType} reserved successfully!");
+            return true;
+        }
+        else
+        {
+            Console.WriteLine($"Sorry, Room {roomType} is already booked. Please choose another room.");
+            return false;
+        }
+    }
+
+    static int GetNumberOfNights()
+    {
+        int numberOfNights;
+        do
+        {
+            Console.Write("Enter the number of nights: ");
+        } while (!int.TryParse(Console.ReadLine(), out numberOfNights) || numberOfNights <= 0);
+
+        return numberOfNights;
+    }
+
+    static string GetGuestName()
+    {
+        Console.Write("Enter your name: ");
+        return Console.ReadLine();
+    }
+
+    static int GetAge()
+    {
+        int age;
+        do
+        {
+            Console.Write("Enter your age: ");
+        } while (!int.TryParse(Console.ReadLine(), out age) || age <= 0);
+
+        return age;
+    }
+
+    static string GetAddress()
+    {
+        Console.Write("Enter your address: ");
+        return Console.ReadLine();
+    }
+
+    static string GetContactNumber()
+    {
+        Console.Write("Enter your contact number: ");
+        return Console.ReadLine();
+    }
+
+    static string GetEmailAddress()
+    {
+        Console.Write("Enter your email address: ");
+        return Console.ReadLine();
+    }
+
+    static string GetBranch()
+    {
+        Console.WriteLine("\nSelect a branch:");
+        Console.WriteLine("1. Sta Rosa");
+        Console.WriteLine("2. Bay");
+        Console.WriteLine("3. Sta Cruz");
+        Console.WriteLine("4. San Pablo");
+
+        int choice;
+        do
+        {
+            Console.Write("Enter the number of your choice: ");
+        } while (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 4);
+
+        switch (choice)
+        {
+            case 1:
+                return "Sta Rosa";
+            case 2:
+                return "Bay";
+            case 3:
+                return "Sta Cruz";
+            case 4:
+                return "San Pablo";
+            default:
+                return string.Empty;
+        }
+    }
+
+    static string GetReservationTime()
+    {
+        Console.Write("Enter the reservation time (HH:mm): ");
+        return Console.ReadLine();
+    }
+
+    static void DisplayReceipt(string guestName, int age, string address, string contactNumber, string emailAddress, string branch, string roomType, double roomPrice, int numberOfNights, double totalCost, string reservationTime)
+    {
+        Console.WriteLine("\nReceipt:");
+        Console.WriteLine($"Guest Name: {guestName}");
+        Console.WriteLine($"Age: {age}");
+        Console.WriteLine($"Address: {address}");
+        Console.WriteLine($"Contact Number: {contactNumber}");
+        Console.WriteLine($"Email Address: {emailAddress}");
+        Console.WriteLine($"Branch: {branch}");
+        Console.WriteLine($"Room Type: {roomType}");
+        Console.WriteLine($"Room Price per Night: ${roomPrice:F2}");
+        Console.WriteLine($"Number of Nights: {numberOfNights}");
+        Console.WriteLine($"Total Cost: ${totalCost:F2}");
+        Console.WriteLine($"Reservation Time: {reservationTime}\n");
+
+        int roomNumber = Array.IndexOf(roomAvailability.Keys.ToArray(), false) + 1;
+        roomReservations.Add(roomNumber, $"Guest: {guestName}, Room Type: {roomType}, Branch: {branch}, Reservation Time: {reservationTime}");
+    }
+
+    static string GetPaymentMethod()
+    {
+        Console.WriteLine("\nSelect a payment method:");
+        Console.WriteLine("1. Credit Card");
+        Console.WriteLine("2. PayPal");
+        Console.WriteLine("3. GCash");
+
+        int choice;
+        do
+        {
+            Console.Write("Enter the number of your choice: ");
+        } while (!int.TryParse(Console.ReadLine(), out choice) || choice < 1 || choice > 3);
+
+        switch (choice)
+        {
+            case 1:
+                return "CreditCard";
+            case 2:
+                return "PayPal";
+            case 3:
+                return "GCash";
+            default:
+                return string.Empty;
+        }
+    }
+
+    static void ProcessCreditCardPayment(double totalCost)
+    {
+        Console.WriteLine("Payment Details:");
+        Console.Write("Enter your credit card number: ");
+        string creditCardNumber = Console.ReadLine();
+
+        Console.Write("Enter the expiration date (MM/YY): ");
+        string expirationDate = Console.ReadLine();
+
+        Console.Write("Enter the CVV: ");
+        string cvv = Console.ReadLine();
+
+        Console.WriteLine($"Credit Card Payment successful! Total amount charged: ${totalCost:F2}\n");
+    }
+
+    static void ProcessPayPalPayment(double totalCost)
+    {
+        Console.WriteLine("Payment Details:");
+        Console.Write("Enter your PayPal email address: ");
+        string paypalEmail = Console.ReadLine();
+
+        Console.WriteLine($"PayPal Payment successful! Total amount charged: ${totalCost:F2}\n");
+    }
+
+    static void ProcessGCashPayment(double totalCost)
+    {
+        Console.WriteLine("Payment Details:");
+        Console.Write("Enter your GCash mobile number: ");
+        string gcashNumber = Console.ReadLine();
+
+        Console.WriteLine($"GCash Payment successful! Total amount charged: ${totalCost:F2}\n");
+    }
+}
