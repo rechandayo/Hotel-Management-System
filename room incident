@@ -140,7 +140,7 @@ namespace HotelBookingProgram
 
                 bool validroom = false;
 
-                string room;
+                string room = "";
                 string realRoom;
                 int costperday = 0;
 
