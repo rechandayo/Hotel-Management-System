@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http.Headers;
+using System.Reflection;
 
 namespace HotelBookingProgram
 {
@@ -29,7 +30,7 @@ namespace HotelBookingProgram
 
                 string? name, address , contactNumber , emailAddress ;
                 int age;
-                int residents;
+                int residents = 0;
 
                 Console.Write("Please enter your name: ");
                 name = Console.ReadLine();
@@ -43,8 +44,23 @@ namespace HotelBookingProgram
                 Console.Write("Please enter your email address: ");
                 emailAddress = Console.ReadLine();
                 
-                Console.Write("How many residents will be staying: ");
-                residents = int.Parse(Console.ReadLine());
+                bool validresident = false;
+
+                while (!validresident)
+                {
+                    Console.Write("How many residents will be staying: ");
+
+                    if (int.TryParse(Console.ReadLine(), out int input))
+                    {
+                        // Input is a valid integer
+                        residents = input;
+                        validresident = true; // Exit the loop
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input. Please enter a number.");
+                    }
+                }
 
             
             // ex
@@ -123,10 +139,33 @@ namespace HotelBookingProgram
                 Console.WriteLine();
                 Console.WriteLine("Enter the number of occupants.");
                 
-                Console.Write("Adults: ");
-                int adultno = int.Parse(Console.ReadLine());
-                Console.Write("Child: ");
-                int childno = int.Parse(Console.ReadLine());
+                bool validadult = false;
+                int adultno = 0;
+
+                while (!validadult)
+                {
+                    Console.Write("Adults: ");
+                    if (int.TryParse(Console.ReadLine(), out int input))
+                    {
+                        adultno = input;
+                        validadult = true;
+                    }
+                    else {Console.WriteLine("Invalid input. Please enter a number.");}
+                }
+
+                bool validminornum = false;
+                
+                while (!validminornum)
+                {
+                    Console.Write("Minor (Ages 15 below): ");
+
+                    if (int.TryParse(Console.ReadLine(), out int input))
+                    {
+                        int childno = input;
+                        validminornum = true;
+                    }
+                    else {Console.WriteLine("Invalid input. Please enter a number.");}
+                }
 
 
                 Console.Clear();
@@ -379,10 +418,10 @@ namespace HotelBookingProgram
                     {
                         Console.Write("Invalid input. Please enter a numeric value: ");
                     }
-                    Console.WriteLine($"You selected room {selectedRoom} of {room}.");
+                    
                 }
             // asd
-
+                Console.WriteLine($"You selected room {selectedRoom} of {room}.");
 
 
 
@@ -531,102 +570,34 @@ namespace HotelBookingProgram
             Console.WriteLine("\nThank you for choosing Morada Grand Royal Hotel, have a nice stay!\n");
         }
 
-    static void desc1()
-        {
-            Console.Clear();
-             Console.WriteLine();
-                Console.WriteLine("******************************************");
-                Console.WriteLine("*               Room Type                *");
-                Console.WriteLine("******************************************");
-            Console.WriteLine("Here are our offers : \nSS1, SS2, SS3, SS4, SS5 \n Standard Suites (500 php per head for 24hrs)");
-            Console.WriteLine("It includes : A living area\n A bedroom with queen-sized bed\n A bathroom with a shower");
-
-            Console.WriteLine("\n\n\nNavigation Options:");
-            Console.WriteLine("1. Next Page");
-        }
-
-    static void desc2()
-        {
-            Console.Clear();
-             Console.WriteLine();
-                Console.WriteLine("******************************************");
-                Console.WriteLine("*               Room Type                *");
-                Console.WriteLine("******************************************");
-            Console.WriteLine("MS1, MS2, MS3, MS4, MS5 \nMini Suite (800 php per head for 24hrs)");
-            Console.WriteLine("Separate living area\n A bedroom with king-sized bed\n A spacious bathroom with a bathtub and shower\n Work desk, High-speed internet\n Flat screen TV");
-
-            Console.WriteLine("\n\n\nNavigation Options:");
-            Console.WriteLine("1. Next Page");
-            Console.WriteLine("2. Previous Page");
-                
-        }
-
-    static void desc3()
-        {
-            Console.Clear();
-             Console.WriteLine();
-                Console.WriteLine("******************************************");
-                Console.WriteLine("*               Room Type                *");
-                Console.WriteLine("******************************************");
-            Console.WriteLine("BS1, BS2, BS3, BS4, BS5 \nBridal Suites (1000 php per head for 24hrs)");
-            Console.WriteLine("Romantic ambiance with a king-sized bed\n A spacious bathroom with a Jacuzzi tub\n A separate living area\n Champagne, Chocolates, Other romantic touches");
-
-            Console.WriteLine("\n\n\nNavigation Options:");
-            Console.WriteLine("1. Next Page");
-            Console.WriteLine("2. Previous Page");
-        }
-
-    static void desc4()
-        {
-            Console.Clear();
-            Console.WriteLine();
-            Console.WriteLine("******************************************");
-            Console.WriteLine("*               Room Type                *");
-            Console.WriteLine("******************************************");
-            Console.WriteLine("HS1, HS2, HS3, HS4, HS5 \nHoneymoon Suite (1500 php per head for 24hrs)");
-            Console.WriteLine("Four-poster bed\n A private balcony with a view\n A spacious bathroom with a Jacuzzi tub\n Bottle of champagne, Rose petals, Other romantic amenities");
-
-            Console.WriteLine("\n\n\nNavigation Options:");
-            Console.WriteLine("1. Next Page");
-            Console.WriteLine("2. Previous Page");
-        }
-
-    static void desc5()
-        {
-            Console.Clear();
-             Console.WriteLine();
-                Console.WriteLine("******************************************");
-                Console.WriteLine("*               Room Type                *");
-                Console.WriteLine("******************************************");
-            Console.WriteLine("PS1, PS2, PS3, PS4, PS5 \nPresidential Suite (2000 php per head for 24hrs)");
-            Console.WriteLine("A separate living area\n A dining area\n A bedroom with a king-sized bed\n A spacious bathroom with a Jacuzzi tub\n Private balcony with a view\n A fully equipped kitchen\n A butler service");
-
-            Console.WriteLine("\n\n\nNavigation Options:");
-            Console.WriteLine("2. Previous Page");
-            Console.WriteLine("3. Continue to Select Room Type");
-        }
-
-    static void lastpage()
-        {
-            Console.Write("This is the last page: ");
-        }
 
     static void SignUp()
     {
+        Console.Clear();
         Console.WriteLine("Welcome! Let's create an account.");
 
-        Console.Write("Please enter your age: ");
-        int age = int.Parse(Console.ReadLine());
-        if (age >= 18)
+        while (true)
         {
-            Console.WriteLine("You are eligible to create an account.");
-            // Proceed with account creation
-        }
-        else
-        {
-            Console.WriteLine("You must be 18 years or older to create an account.");
-            Console.ReadKey();
-            homepage();
+            Console.Write("Please enter your age: ");
+            if (int.TryParse(Console.ReadLine(), out int age))
+            {
+                if (age >= 18)
+                {
+                    Console.WriteLine("You are eligible to create an account.");
+                    break; // Exit the loop when the input is valid
+                }
+                else
+                {
+                    Console.WriteLine("You must be 18 years or older to create an account.");
+                    Console.ReadKey();
+                    homepage();
+                    break; // Exit the loop after displaying the message
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Please enter a valid age.");
+            }
         }
 
         Console.WriteLine("Please enter a new username:");
@@ -671,6 +642,7 @@ namespace HotelBookingProgram
 
     static void LoginProcess()
     {
+        Console.Clear();
         Console.WriteLine("\nPlease login to your account.");
 
         Console.WriteLine("Enter your username:");
@@ -679,6 +651,7 @@ namespace HotelBookingProgram
         Console.WriteLine("Enter your password:");
         string enteredPassword = Console.ReadLine();
 
+       
         if (Login(enteredUsername, enteredPassword))
         {
             Console.WriteLine("Login successful!");
@@ -686,7 +659,9 @@ namespace HotelBookingProgram
         }
         else
         {
-            Console.WriteLine("Invalid username or password. Please try again.");
+            Console.WriteLine("Invalid username or password. We will now redirect you to the Home page.");
+            Console.ReadKey();
+            homepage();
         }
     }
 
@@ -709,22 +684,39 @@ namespace HotelBookingProgram
 
             Console.WriteLine("How can we help you?");
 
+            bool validChoice = false;
+
             Console.WriteLine("\n\n\nNavigation Options:");
             Console.WriteLine("1. Login");
             Console.WriteLine("2. Sign Up");
 
             Console.Write("What do you want to do: ");
-                int homechoice = int.Parse(Console.ReadLine());
 
-                switch (homechoice)
+            while (!validChoice)
+            {
+
+                if (int.TryParse(Console.ReadLine(), out int homeChoice))
                 {
-                    case 1:
-                    LoginProcess();
-                    break;
-                    case 2: 
-                    SignUp();
-                    break;
+                    switch (homeChoice)
+                    {
+                        case 1:
+                            LoginProcess();
+                            validChoice = true;
+                            break;
+                        case 2:
+                            SignUp();
+                            validChoice = true;
+                            break;
+                        default:
+                            Console.WriteLine("Invalid choice. Please enter 1 or 2.");
+                            break;
+                    }
                 }
+                else
+                {
+                    Console.Write("Invalid input. Please enter a number: ");
+                }
+            }
         }
     static void checkin()
     {
