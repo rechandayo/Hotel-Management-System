@@ -1,0 +1,129 @@
+using System;
+using System.Collections.Generic;
+
+namespace HotelBookingSystem
+{
+    // Define a simple Room class
+    public class Room
+    {
+        public int RoomNumber { get; set; }
+        public string RoomType { get; set; }
+        public bool IsOccupied { get; set; }
+    }
+
+    // Define a Reservation class
+    public class Reservation
+    {
+        public int ReservationId { get; set; }
+        public int RoomNumber { get; set; }
+        public string GuestName { get; set; }
+        public DateTime CheckInDate { get; set; }
+        public DateTime CheckOutDate { get; set; }
+    }
+
+    // Hotel class containing rooms and reservations
+    public class Hotel
+    {
+        private List<Room> rooms;
+        private List<Reservation> reservations;
+
+        public Hotel()
+        {
+            rooms = new List<Room>();
+            reservations = new List<Reservation>();
+        }
+
+        // Method to add a room to the hotel
+        public void AddRoom(int roomNumber, string roomType)
+        {
+            Room room = new Room { RoomNumber = roomNumber, RoomType = roomType, IsOccupied = false };
+            rooms.Add(room);
+        }
+
+        // Method to display available rooms
+        public void DisplayAvailableRooms()
+        {
+            Console.WriteLine("Available Rooms:");
+            foreach (Room room in rooms)
+            {
+                if (!room.IsOccupied)
+                {
+                    Console.WriteLine($"Room Number: {room.RoomNumber}, Type: {room.RoomType}");
+                }
+            }
+        }
+
+        // Method to make a reservation
+        public void MakeReservation(int roomNumber, string guestName, DateTime checkInDate, DateTime checkOutDate)
+        {
+            Room room = rooms.Find(r => r.RoomNumber == roomNumber);
+            if (room != null && !room.IsOccupied)
+            {
+                room.IsOccupied = true;
+                Reservation reservation = new Reservation
+                {
+                    ReservationId = reservations.Count + 1,
+                    RoomNumber = roomNumber,
+                    GuestName = guestName,
+                    CheckInDate = checkInDate,
+                    CheckOutDate = checkOutDate
+                };
+                reservations.Add(reservation);
+                Console.WriteLine("Reservation successful!");
+            }
+            else
+            {
+                Console.WriteLine("Room is already occupied or doesn't exist.");
+            }
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Hotel hotel = new Hotel();
+            // Adding rooms to the hotel
+            hotel.AddRoom(101, "Single");
+            hotel.AddRoom(102, "Double");
+            hotel.AddRoom(103, "Suite");
+
+            bool continueBooking = true;
+
+            while (continueBooking)
+            {
+                // Display available rooms
+                hotel.DisplayAvailableRooms();
+
+                // Get user input for reservation
+                Console.WriteLine("\nEnter details for reservation:");
+                Console.Write("Enter Room Number: ");
+                int roomNumber = Convert.ToInt32(Console.ReadLine());
+
+                Console.Write("Enter Guest Name: ");
+                string guestName = Console.ReadLine();
+
+                Console.Write("Enter Check-In Date (YYYY-MM-DD): ");
+                DateTime checkInDate = Convert.ToDateTime(Console.ReadLine());
+
+                Console.Write("Enter Check-Out Date (YYYY-MM-DD): ");
+                DateTime checkOutDate = Convert.ToDateTime(Console.ReadLine());
+
+                // Make a reservation based on user input
+                hotel.MakeReservation(roomNumber, guestName, checkInDate, checkOutDate);
+
+                // Ask if the user wants to continue booking
+                Console.WriteLine("\nDo you want to make another reservation? (Y/N)");
+                string response = Console.ReadLine().ToUpper();
+
+                if (response != "Y")
+                {
+                    continueBooking = false;
+                }
+            }
+
+            Console.WriteLine("\nThank you for using the booking system!");
+            Console.ReadLine();
+        }
+    }
+}
