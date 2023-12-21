@@ -431,46 +431,84 @@ namespace HotelBookingProgram
 
                        bool validroom = false;
 
-do
-{
-    Console.Write("Enter the number of occupants: ");
-    adultno [index-1] = int.Parse(Console.ReadLine());
+                        do
+                        {
+                            Console.Write("Enter the number of occupants: ");
+                            adultno [index-1] = int.Parse(Console.ReadLine());
 
-    if (adultno[index-1] <= 0)
-    {
-        Console.WriteLine("Number of occupants must be greater than 0.");
-        continue;
-    }
+                            if (adultno[index-1] <= 0)
+                            {
+                                Console.WriteLine("Number of occupants must be greater than 0.");
+                                continue;
+                            }
 
-    Console.WriteLine();
+                            Console.WriteLine();
 
-    if (adultno[index-1] == 1)
-    {
-        Console.WriteLine("Here are our offers : \nSS1, SS2, SS3, SS4, SS5 \n Standard Suites (500 php per head for 24hrs)");
-        //... (rest of the Standard Suite details)
-    }
-    else if (adultno[index-1] <= 3)
-    {
-        Console.WriteLine("MS1, MS2, MS3, MS4, MS5 \n Mini Suite (800 php per head for 24hrs)");
-        //... (rest of the Mini Suite details)
-    }
-    else if (adultno[index-1] <= 4)
-    {
-        Console.WriteLine("BS1, BS2, BS3, BS4, BS5 \n Bridal Suites (1000 php per head for 24hrs)");
-        //... (rest of the Bridal Suite details)
-    }
-    else if (adultno[index-1] <= 5)
-    {
-        Console.WriteLine("HS1, HS2, HS3, HS4, HS5 \n Honeymoon Suite (1500 php per head for 24hrs)");
-        //... (rest of the Honeymoon Suite details)
-    }
-    else
-    {
-        Console.WriteLine("Room cannot exceed more than 5 occupants.");
-        continue; // Restart the loop for a valid input
-    }
+                            if (adultno[index-1] == 1)
+                            {
+                                Console.WriteLine();
+                                Console.WriteLine("Here are our offers : \nSS1, SS2, SS3, SS4, SS5 \n Standard Suites (500 php per head for 24hrs)");
+                                Console.WriteLine("It includes : \n A living area \n A bedroom with queen-sized bed \n A bathroom with a shower");
+                                Console.WriteLine();
+                                Console.WriteLine("MS1, MS2, MS3, MS4, MS5 \n Mini Suite (800 php per head for 24hrs)");
+                                Console.WriteLine("Separate living area \n A bedroom with king-sized bed \n A spacious bathroom with a bathtub and shower \n Work desk \n High-speed internet \n Flat screen TV \n");
+                                Console.WriteLine();
+                                Console.WriteLine("BS1, BS2, BS3, BS4, BS5 \n Bridal Suites (1000 php per head for 24hrs)");
+                                Console.WriteLine("Romantic ambiance with a king-sized bed \n A spacious bathroom with a Jacuzzi tub \n A separate living area \n Champagne \n Chocolates \n Other romantic touches");
+                                Console.WriteLine();
+                                Console.WriteLine("HS1, HS2, HS3, HS4, HS5 \n Honeymoon Suite (1500 php per head for 24hrs)");
+                                Console.WriteLine("Four-poster bed \n A private balcony with a view \n A spacious bathroom with a Jacuzzi tub \n Bottle of champagne \n Rose petals \n Other romantic amenities \n ");
+                                Console.WriteLine();
+                                Console.WriteLine(" SS = Standard Suites \n MS = Mini Suite \n BS = Bridal Suites \n HS = Honeymoon Suite");
 
-    Console.Write("Enter the code of the room that you choose: ");
+                            }
+                            else if (adultno[index-1] <= 3)
+                            {
+                                Console.WriteLine();
+                                Console.WriteLine("Here are our available rooms:");
+                                Console.WriteLine();
+                                Console.WriteLine("MS1, MS2, MS3, MS4, MS5 \n Mini Suite (800 php per head for 24hrs)");
+                                Console.WriteLine("Separate living area \n A bedroom with king-sized bed \n A spacious bathroom with a bathtub and shower \n Work desk \n High-speed internet \n Flat screen TV \n");
+                                Console.WriteLine();
+                                Console.WriteLine("BS1, BS2, BS3, BS4, BS5 \n Bridal Suites (1000 php per head for 24hrs)");
+                                Console.WriteLine("Romantic ambiance with a king-sized bed \n A spacious bathroom with a Jacuzzi tub \n A separate living area \n Champagne \n Chocolates \n Other romantic touches");
+                                Console.WriteLine();
+                                Console.WriteLine("HS1, HS2, HS3, HS4, HS5 \n Honeymoon Suite (1500 php per head for 24hrs)");
+                                Console.WriteLine("Four-poster bed \n A private balcony with a view \n A spacious bathroom with a Jacuzzi tub \n Bottle of champagne \n Rose petals \n Other romantic amenities \n ");
+                                Console.WriteLine();
+                                Console.WriteLine(" MS = Mini Suite \n BS = Bridal Suites \n HS = Honeymoon Suite");
+                            }
+                            else if (adultno[index-1] <= 4)
+                            {
+                                Console.WriteLine();
+                                Console.WriteLine("Here are our available rooms:");
+                                Console.WriteLine();
+                                Console.WriteLine("BS1, BS2, BS3, BS4, BS5 \n Bridal Suites (1000 php per head for 24hrs)");
+                                Console.WriteLine("Romantic ambiance with a king-sized bed \n A spacious bathroom with a Jacuzzi tub \n A separate living area \n Champagne \n Chocolates \n Other romantic touches");
+                                Console.WriteLine();
+                                Console.WriteLine("HS1, HS2, HS3, HS4, HS5 \n Honeymoon Suite (1500 php per head for 24hrs)");
+                                Console.WriteLine("Four-poster bed \n A private balcony with a view \n A spacious bathroom with a Jacuzzi tub \n Bottle of champagne \n Rose petals \n Other romantic amenities \n ");
+                                Console.WriteLine();
+                                Console.WriteLine(" BS = Bridal Suites \n HS = Honeymoon Suite");
+                            }
+                            else if (adultno[index-1] <= 5)
+                            {
+                                Console.WriteLine();
+                                Console.WriteLine("Here are our available rooms:");
+                                Console.WriteLine();
+                                Console.WriteLine("HS1, HS2, HS3, HS4, HS5 \n Honeymoon Suite (1500 php per head for 24hrs)");
+                                Console.WriteLine("Four-poster bed \n A private balcony with a view \n A spacious bathroom with a Jacuzzi tub \n Bottle of champagne \n Rose petals \n Other romantic amenities \n ");
+                                Console.WriteLine();
+                                Console.WriteLine(" HS = Honeymoon Suite");
+                                Console.WriteLine();
+                            }
+                            else
+                            {
+                                Console.WriteLine("Room cannot exceed more than 5 occupants.");
+                                continue; // Restart the loop for a valid input
+                            }
+
+                        Console.Write("Enter the code of the room that you choose: ");
                         room [index-1]= Console.ReadLine().ToUpper();
 
                         switch (room[index - 1])
@@ -505,7 +543,7 @@ do
                     while (!validroom);
 
 
-Console.ReadKey();
+                    Console.ReadKey();
                             
             }
         public static void RoomNum ()
