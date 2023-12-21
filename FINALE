@@ -10,16 +10,20 @@ namespace HotelBookingProgram
         static Dictionary<string, string> accounts = new Dictionary<string, string>();
    
         static int currentpage = 0;
-        public static string? address, contactNumber , emailAddress , realRoom ;
+        static string? address, contactNumber , emailAddress , realRoom ;
 
-        public static string[] name = new string [25] ;
+        static string roomchoice;
 
-        public static string[] branch = new string[25];
-        public static    int[] chosenDate = new int[25];
-        public static    string[] room = new string[25];
-        public static    int[] selectedRoom = new int[25];
-         
+        static string?[] name = new string [25] ;
+
+        public static string[] finalrooms = new string[25];
+        
+        static bool[] rooms = new bool[20];
+
+        static string [] finalroom = new string [25];
+       
         public static   int[] total = new int[25];
+        static int[] finaltotal = new int [25];
         public static   string[] paymentmeth = new string[25];
 
         public static DateTime[] startDate = new DateTime [25];
@@ -30,7 +34,19 @@ namespace HotelBookingProgram
         public static int costperday ;
         public static int  index = 0 ;
         public static int[] daysDifference = new int [25] ;   
+
+        static string [] occupants = new string [25];
+        static string [] finalname = new string [25];
+        static string [] finalpaymentmeth = new string [25];
+        static int [] finaladultno = new int [25];
+        public static DateTime[] finalstartDate = new DateTime [25];
+        public static DateTime[] finalendDate = new DateTime [25];
+
+        static int [] finaldaysDifference = new int [25];
         public static void Main(string[] args)
+
+        
+
         {
             
         
@@ -48,34 +64,30 @@ namespace HotelBookingProgram
 
                 Basicinfo ();
 
-                ShowBranch (); // readkey
+                RoomType () ; 
 
-                ChooseBranch (); 
+                DateAndCost () ;
 
+                Incompletebookingdetails () ;    
 
-                RoomType () ; // dapat lumabas lahat ng options sa speicific na occupants - rhei
+                confirmation ();  
 
-
-                RoomNum () ; // gagawin ni queen ; reservation
-
-                DateAndCost () ; // lalagyan ng design at design
-
-
-                Payment () ; // confirmation if he wants to save it ot not , confirm bago payment
-
-                bookingdetails () ; // catch n brek ako
-               
 
                 Console.Write("Do you want to book another room? (y/n): ");
                 retry = char.Parse(Console.ReadLine());
-            }while(retry == 'y');
 
-        if (retry != 'n');
-        {
-            showguidelines();
-        }
+            } while (retry == 'y' || retry == 'Y');
+
+                if (retry != 'n')
+                {
+               showguidelines();
+                }
             
-        }
+          }
+
+
+
+
         static string paymentMethod()
         {
             Console.Clear();
@@ -89,7 +101,7 @@ namespace HotelBookingProgram
             int choice = int.Parse(Console.ReadLine());
             do {
                 Console.Write("Enter the number of your payment method choice: ");
-            }
+               }
             while (choice < 1 || choice > 3);
 
             switch (choice)
@@ -154,6 +166,8 @@ namespace HotelBookingProgram
             Console.WriteLine("- Subject to availability of the storage space, the guest can store luggage in the luggage room, at the guest's sole risk as to loss or damage from any cause, Luggage may not be stored for a period of over 30 days.");
 
             Console.WriteLine("\nThank you for choosing Morada Grand Royal Hotel, have a nice stay!\n");
+
+            Console.ReadKey();
         }
 
 
@@ -208,9 +222,10 @@ namespace HotelBookingProgram
 
         Console.WriteLine("Account created successfully!");
 
+        Console.ReadKey();
+
         homepage();
 
-        // Login using the newly created account
         
     }
 
@@ -241,7 +256,7 @@ namespace HotelBookingProgram
         if (Login(enteredUsername, enteredPassword))
         {
             Console.WriteLine("Login successful!");
-            // Add your logic here for what happens after successful login
+            Console.ReadKey();
         }
         else
         {
@@ -249,6 +264,7 @@ namespace HotelBookingProgram
             Console.ReadKey();
             homepage();
         }
+        
     }
 
     static bool Login(string username, string password)
@@ -258,6 +274,9 @@ namespace HotelBookingProgram
 
     static void homepage()
         {
+
+            Console.Clear();
+
             Console.WriteLine("How can we help you?");
 
             bool validChoice = false;
@@ -293,9 +312,14 @@ namespace HotelBookingProgram
                     Console.Write("Invalid input. Please enter a number: ");
                 }
             }
+
+            Console.ReadKey();
         }
         static void checkin()
             {
+
+                Console.Clear();
+
                 Console.WriteLine();
                 Console.WriteLine("******************************************");
                 Console.WriteLine("*               Date of Stay             *");
@@ -309,6 +333,8 @@ namespace HotelBookingProgram
 
                 int daysDifference = (int)(endDate - startDate).TotalDays;
                 Console.WriteLine($"You will be staying for {daysDifference} days.");
+
+                Console.ReadKey();
             }
 
         static DateTime GetValidDateInput()
@@ -342,83 +368,102 @@ namespace HotelBookingProgram
                         Console.WriteLine("*                                               *");
                         Console.WriteLine("*************************************************");
                         Console.ResetColor();
+                Console.ReadKey();
             }
-        public static void Basicinfo ()
+        static void Basicinfo ()
             {
-                Console.Write("Please enter your name: ");
+                Console.Clear();
+                bool validInput1 = false;
+                bool validInput2 = false;
+                bool validInput3 = false;
+
+                do 
+                {
+                    try
+                    {
+                        Console.Write("Please enter your name: ");
                         name [index - 1] = Console.ReadLine();
+
+                        if ( name[index-1].Any(Char.IsDigit))
+                        {
+                            throw new ArgumentException("Name should not contain numbers.");
+                        }
+
+                        else if (string.IsNullOrWhiteSpace(name[index-1]))
+                        {
+                            throw new ArgumentException("Name should not be empty or whitespace.");
+                        }
+
+                        else
+                        {
+                            validInput1 = true;
+                        }
+                    }
+
+                    catch (ArgumentException ex)
+                    {
+                         Console.WriteLine("Invalid input: " + ex.Message);
+                    }
+               } while (!validInput1);
                         
+                do
+                {
+                    try
+                    {
                         Console.Write("Please enter your contact number: ");
                         contactNumber = Console.ReadLine();
 
-                        Console.Write("Please enter your email address: ");
-                        emailAddress = Console.ReadLine();
-            }
-        static void ShowBranch ()
-            {
-                Console.Clear();
-
-                        Console.WriteLine();
-                        Console.WriteLine("These are our branches inside Laguna");
-                        Console.WriteLine();
-                        Console.WriteLine("Codes\t        Branch Names");
-                        Console.WriteLine("------------\t-------------");
-                        Console.WriteLine("SR\t\tSta. Rosa");
-                        Console.WriteLine("BAE\t\tBae");
-                        Console.WriteLine("SC\t\tSta. Cruz");
-                        Console.WriteLine("SP\t\tSan Pablo");
-                        Console.WriteLine("LB\t\tLos Banos");
-            }
-        public static void ChooseBranch ()
-            {
-                bool validBranch = false; 
-
-                        
-
-                        do 
+                         if (contactNumber.Any(char.IsLetter))
                         {
-
-                        Console.Write("To choose your designated branch, just enter it's code : ");
-                        branch [index -1]= Console.ReadLine().ToUpper();
-                
-
-                        switch (branch [index -1])
-                        {
-                        case "SR":
-                            Console.WriteLine("You selected Sta. Rosa.");
-                            validBranch = true ;
-                            break;
-                        case "BAE":
-                            Console.WriteLine("You selected Bae.");
-                            validBranch = true ;
-                            break;
-                        case "SC":
-                            Console.WriteLine("You selected Sta. Cruz.");
-                            validBranch = true ;
-                            break;
-                        case "SP":
-                            Console.WriteLine("You selected San Pablo.");
-                            validBranch = true ;
-                            break;
-                        case "LB":
-                            Console.WriteLine("You selected Los Banos.");
-                            validBranch = true ;
-                            break;
-                        default:
-                            Console.WriteLine("Wrong code, please only enter the available code");
-                            break;
-
+                            throw new ArgumentException("Contack Number should not contain letters.");
                         }
 
-                        } 
-                        while (!validBranch);
-            }
+                        else if  (string.IsNullOrWhiteSpace(contactNumber))
+                        {
+                            throw new ArgumentException("contact number should not be empty or whitespace.");
+                        }
+
+                        else 
+                        {
+                            validInput2 = true;
+                        }
+                    }
+                    
+                    catch (ArgumentException ex)
+                    {
+                         Console.WriteLine("Invalid input: " + ex.Message);
+                    }
+               } while (!validInput2);
+
+               do
+                {
+                    try
+                    {
+                        Console.Write("Please enter your email address: ");
+                        emailAddress = Console.ReadLine();
+
+                        if (string.IsNullOrWhiteSpace(emailAddress))
+                        {
+                            throw new ArgumentException("email address should not be empty or whitespace.");
+                        }
+
+                        else 
+                        {
+                            validInput3 = true;
+                        }
+                    }
+                    
+                    catch (ArgumentException ex)
+                    {
+                         Console.WriteLine("Invalid input: " + ex.Message);
+                    }
+               } while (!validInput3);
+                      
+                }
 
        
-              
-            
-        
-        public static void RoomType ()
+       
+        static void RoomType ()
             {
             Console.Clear();
                         Console.WriteLine();
@@ -430,19 +475,50 @@ namespace HotelBookingProgram
                         
 
                        bool validroom = false;
+                       bool validinput = false;
 
                         do
                         {
-                            Console.Write("Enter the number of occupants: ");
-                            adultno [index-1] = int.Parse(Console.ReadLine());
+                                    try
+                                    {
+                                    Console.WriteLine("Our hotel have a min/max occupants of 1 to 5");
+                                    Console.Write("Enter the number of occupants: ");
+                                    occupants[index-1] = Console.ReadLine();
 
-                            if (adultno[index-1] <= 0)
+                                    if (string.IsNullOrWhiteSpace(occupants[index-1]))
+                                    {
+                                        throw new ArgumentException("Input cannot be blank.");
+                                    }
+
+                                    adultno[index-1] = int.Parse(occupants[index-1]);
+
+                                    if (adultno[index-1] < 1 || adultno[index-1] > 5)
+                                    {
+                                        throw new ArgumentOutOfRangeException("Occupants should be between 1 and 5.");
+                                    }
+
+                                    validinput = true;
+
+                                    }
+                                    catch (ArgumentException ex)
+                                    {
+                                        Console.WriteLine("Invalid input: " + ex.Message);
+                                    }
+                                    catch (FormatException)
+                                    {
+                                        Console.WriteLine("Invalid input. Please enter a valid number.");
+                                    }
+                                
+                       } while (!validinput);
+
+                     
+        
+                       while (true)
                             {
-                                Console.WriteLine("Number of occupants must be greater than 0.");
-                                continue;
-                            }
+                            Console.WriteLine("You entered: " + adultno[index-1] + " occupants");
+                            Console.ReadLine();
+                            Console.Clear();
 
-                            Console.WriteLine();
 
                             if (adultno[index-1] == 1)
                             {
@@ -459,7 +535,7 @@ namespace HotelBookingProgram
                                 Console.WriteLine("HS1, HS2, HS3, HS4, HS5 \n Honeymoon Suite (1500 php per head for 24hrs)");
                                 Console.WriteLine("Four-poster bed \n A private balcony with a view \n A spacious bathroom with a Jacuzzi tub \n Bottle of champagne \n Rose petals \n Other romantic amenities \n ");
                                 Console.WriteLine();
-                                Console.WriteLine(" SS = Standard Suites \n MS = Mini Suite \n BS = Bridal Suites \n HS = Honeymoon Suite");
+                                Console.WriteLine(" SS1 to SS5 = Standard Suites \n MS1 to MS5 = Mini Suite \n BS1 to BS5 = Bridal Suites \n HS1 to HS5 = Honeymoon Suite");
 
                             }
                             else if (adultno[index-1] <= 3)
@@ -476,7 +552,7 @@ namespace HotelBookingProgram
                                 Console.WriteLine("HS1, HS2, HS3, HS4, HS5 \n Honeymoon Suite (1500 php per head for 24hrs)");
                                 Console.WriteLine("Four-poster bed \n A private balcony with a view \n A spacious bathroom with a Jacuzzi tub \n Bottle of champagne \n Rose petals \n Other romantic amenities \n ");
                                 Console.WriteLine();
-                                Console.WriteLine(" MS = Mini Suite \n BS = Bridal Suites \n HS = Honeymoon Suite");
+                                Console.WriteLine(" MS1 to MS5 = Mini Suite \n BS1 to BS5 = Bridal Suites \n HS1 to HS5 = Honeymoon Suite");
                             }
                             else if (adultno[index-1] <= 4)
                             {
@@ -489,7 +565,7 @@ namespace HotelBookingProgram
                                 Console.WriteLine("HS1, HS2, HS3, HS4, HS5 \n Honeymoon Suite (1500 php per head for 24hrs)");
                                 Console.WriteLine("Four-poster bed \n A private balcony with a view \n A spacious bathroom with a Jacuzzi tub \n Bottle of champagne \n Rose petals \n Other romantic amenities \n ");
                                 Console.WriteLine();
-                                Console.WriteLine(" BS = Bridal Suites \n HS = Honeymoon Suite");
+                                Console.WriteLine(" BS1 to BS5 = Bridal Suites \n HS1 to HS5 = Honeymoon Suite");
                             }
                             else if (adultno[index-1] <= 5)
                             {
@@ -499,37 +575,132 @@ namespace HotelBookingProgram
                                 Console.WriteLine("HS1, HS2, HS3, HS4, HS5 \n Honeymoon Suite (1500 php per head for 24hrs)");
                                 Console.WriteLine("Four-poster bed \n A private balcony with a view \n A spacious bathroom with a Jacuzzi tub \n Bottle of champagne \n Rose petals \n Other romantic amenities \n ");
                                 Console.WriteLine();
-                                Console.WriteLine(" HS = Honeymoon Suite");
+                                Console.WriteLine(" HS1 to HS5 = Honeymoon Suite");
                                 Console.WriteLine();
                             }
-                            else
-                            {
-                                Console.WriteLine("Room cannot exceed more than 5 occupants.");
-                                continue; // Restart the loop for a valid input
-                            }
-
+                        
                         Console.Write("Enter the code of the room that you choose: ");
-                        room [index-1]= Console.ReadLine().ToUpper();
+                        roomchoice = Console.ReadLine().ToUpper();
 
-                        switch (room[index - 1])
+                        switch (roomchoice)
                         {
-                            case "SS":
-                                Console.WriteLine("You selected Standard Suite");
+                            case "SS1":
+                                Console.WriteLine("You selected Standard Suite room number 1.");
+                                ReserveRoom(0, "Standard Suite room number 1");
                                 costperday = SS;
                                 validroom = true;
                                 break;
-                            case "MS":
-                                Console.WriteLine("You selected Mini Suite.");
+                            case "MS1":
+                                Console.WriteLine("You selected Mini Suite room number 1.");
+                                ReserveRoom(1, "Mini Suite room number 1");
                                 costperday = MS;
                                 validroom = true;
                                 break;
-                            case "BS":
-                                Console.WriteLine("You selected Bridal Suites.");
+                            case "BS1":
+                                Console.WriteLine("You selected Bridal Suites room number 1.");
+                                ReserveRoom(2, "Bridal Suite room number 1");
                                 costperday = BS;
                                 validroom = true;
                                 break;
-                            case "HS":
-                                Console.WriteLine("You selected Honeymoon Suite.");
+                            case "HS1":
+                                Console.WriteLine("You selected Honeymoon Suite room number 1.");
+                                ReserveRoom(3, "Honeymoon Suite room number 1");
+                                costperday = HS;
+                                validroom = true;
+                                break;
+                            case "SS2":
+                                Console.WriteLine("You selected Standard Suite room number 2.");
+                                ReserveRoom(4, "Standard Suite room number 2");
+                                costperday = SS;
+                                validroom = true;
+                                break;
+                            case "MS2":
+                                Console.WriteLine("You selected Mini Suite room number 2.");
+                                ReserveRoom(5, "Mini Suite room number 2");
+                                costperday = MS;
+                                validroom = true;
+                                break;
+                            case "BS2":
+                                Console.WriteLine("You selected Bridal Suites room number 2.");
+                                ReserveRoom(6, "Bridal Suite room number 2");
+                                costperday = BS;
+                                validroom = true;
+                                break;
+                            case "HS2":
+                                Console.WriteLine("You selected Honeymoon Suite room number 2.");
+                                ReserveRoom(7, "Honeymoon Suite room number 2");
+                                costperday = HS;
+                                validroom = true;
+                                break;
+                            case "SS3":
+                                Console.WriteLine("You selected Standard Suite room number 3.");
+                                ReserveRoom(8, "Standard Suite room number 3");
+                                costperday = SS;
+                                validroom = true;
+                                break;
+                            case "MS3":
+                                Console.WriteLine("You selected Mini Suite room number 3.");
+                                ReserveRoom(9, "Mini Suite room number 3");
+                                costperday = MS;
+                                validroom = true;
+                                break;
+                            case "BS3":
+                                Console.WriteLine("You selected Bridal Suites room number 3.");
+                                ReserveRoom(10, "Bridal Suite room number 3");
+                                costperday = BS;
+                                validroom = true;
+                                break;
+                            case "HS3":
+                                Console.WriteLine("You selected Honeymoon Suite room number 3.");
+                                ReserveRoom(11, "Honeymoon Suite room number 3");
+                                costperday = HS;
+                                validroom = true;
+                                break;
+                            case "SS4":
+                                Console.WriteLine("You selected Standard Suite room number 4");
+                                ReserveRoom(12, "Standard Suite room number 4");
+                                costperday = SS;
+                                validroom = true;
+                                break;
+                            case "MS4":
+                                Console.WriteLine("You selected Mini Suite room number 4.");
+                                ReserveRoom(13, "Mini Suite room number 4");
+                                costperday = MS;
+                                validroom = true;
+                                break;
+                            case "BS4":
+                                Console.WriteLine("You selected Bridal Suites room number 4.");
+                                ReserveRoom(14, "Bridal Suite room number 4");
+                                costperday = BS;
+                                validroom = true;
+                                break;
+                            case "HS4":
+                                Console.WriteLine("You selected Honeymoon Suite room number 4.");
+                                ReserveRoom(15, "Honeymoon Suite room number 4");
+                                costperday = HS;
+                                validroom = true;
+                                break;
+                            case "SS5":
+                                Console.WriteLine("You selected Standard Suite room number 5");
+                                ReserveRoom(16, "Standard Suite room number 5");
+                                costperday = SS;
+                                validroom = true;
+                                break;
+                            case "MS5":
+                                Console.WriteLine("You selected Mini Suite room number 5.");
+                                ReserveRoom(17, "Mini Suite room number 5");
+                                costperday = MS;
+                                validroom = true;
+                                break;
+                            case "BS5":
+                                Console.WriteLine("You selected Bridal Suites room number 5.");
+                                ReserveRoom(18, "Bridal Suite room number 5");
+                                costperday = BS;
+                                validroom = true;
+                                break;
+                            case "HS5":
+                                Console.WriteLine("You selected Honeymoon Suite room number 5.");
+                                ReserveRoom(19, "Honeymoon Suite room number 5");
                                 costperday = HS;
                                 validroom = true;
                                 break;
@@ -537,51 +708,14 @@ namespace HotelBookingProgram
                             default:
                                 Console.WriteLine("Wrong code, please only enter the available code");
                                 break;
-
-                        }
-                    }
-                    while (!validroom);
-
-
-                    Console.ReadKey();
-                            
+                        } 
+                        Console.ReadLine();
+                        break;
+                } 
+        
             }
-        public static void RoomNum ()
-            {
-            Console.Clear();
-                        
-                        
-                            Console.WriteLine($"The selected room type has 5 available rooms.");
 
-                            
-                            bool isValidRoom = false;
-
-                            while (!isValidRoom)
-                            {
-                            Console.Write("\nChoose a room number from 1-5:");
-                            string input = Console.ReadLine();
-
-                            if (int.TryParse(input, out selectedRoom [index-1]))
-                            {
-                                if (selectedRoom[index-1] >= 1 && selectedRoom[index-1]<= 5)
-                                {
-                                    isValidRoom = true;
-                                }
-                                else
-                                {
-                                    Console.Write("Invalid input. Please choose a room number from 1-5: ");
-                                }
-                            }
-                            else
-                            {
-                                Console.Write("Invalid input. Please enter a numeric value: ");
-                            }
-                            
-                        }
-                    
-                        Console.WriteLine($"You selected room {selectedRoom} of {room}.");
-            }
-        public static void DateAndCost ()
+        static void DateAndCost ()
             {
             Console.Clear();
 
@@ -601,36 +735,46 @@ namespace HotelBookingProgram
 
                     total [index -1]= adultno [index -1] * (daysDifference[index-1]  * costperday) ;
 
-                    Console.WriteLine($"The total cost for {room[index-1]} with {daysDifference[index-1]} number of days and {adultno[index-1]} residents is : P" + total[index-1]);
+                    Console.WriteLine($"The total cost for {roomchoice} with {daysDifference[index-1]} number of days and {adultno[index-1]} residents is : P" + total[index-1]);
 
                         Console.ReadKey();
 
             }
-         public static void bookingdetails ()
+         static void finalbookingdetails ()
             {
                 Console.Clear();
 
                  for (int i = 0; i < index; i++)
                  {
-                  
-                    
-                        Console.WriteLine("Your book to Morada Grand Royal Hotel is accepted! \nBooking Details :");
+                        finalname[index-1] = name[index-1] ;
+                        finalstartDate[index-1] = startDate[index-1];
+                        finalendDate[index-1] = endDate [index-1];
+                        finaldaysDifference[index-1] = daysDifference [index-1];
+                        finalroom[index-1] = roomchoice;
+                        finaladultno[index-1] = adultno[index-1];
+                        finaltotal[index-1] = total[index-1];
+                        finalpaymentmeth[index-1] = paymentmeth[index-1];
+
+
+                        Console.WriteLine("");
+                        Console.WriteLine("Booking Details : Complete/Incomplete");
                         Console.WriteLine($"Book #{i + 1} : ");
-                        Console.WriteLine("Name: " + name[i]);
-                        Console.WriteLine("Laguna Branch: " + branch[i]);
-                        Console.WriteLine("Check-in Date: " + startDate[i]);
-                        Console.WriteLine("Check-out Date: " + endDate[i]);
-                        Console.WriteLine("Days to stay: " + daysDifference[i]);
-                        Console.WriteLine("Room Choice: " + room[i] + selectedRoom[i]);
-                        Console.WriteLine("Residents: " + adultno[i]);
-                        Console.WriteLine("Total Cost: " + total[i]);
-                        Console.WriteLine("Payment method: " + paymentmeth[i]);
+                        Console.WriteLine("Name: " + finalname[i]);
+                        Console.WriteLine("Check-in Date: " + finalstartDate[i]);
+                        Console.WriteLine("Check-out Date: " + finalendDate[i]);
+                        Console.WriteLine("Days to stay: " + finaldaysDifference[i]);
+                        Console.WriteLine("Room Choice: " + finalroom[i] );
+                        Console.WriteLine("Residents: " + finaladultno[i]);
+                        Console.WriteLine("Total Cost: " + finaltotal[i]);
+                        Console.WriteLine("Payment method: " + finalpaymentmeth[i]);
+                        Console.WriteLine("");
+
                  }
                     
 
             }
 
-        public static void Payment ()
+        static void Payment ()
             {
                 paymentmeth [index-1]= paymentMethod();
 
@@ -646,6 +790,80 @@ namespace HotelBookingProgram
                         }
 
             }
-       
+        static void confirmation()
+        {
+
+            bool validChoice = false;
+
+            Console.WriteLine("\n\n\nNavigation Options:");
+            Console.WriteLine("1. Proceed to Payment");
+            Console.WriteLine("2. Book another");
+
+            Console.Write("What do you want to do: ");
+
+            while (!validChoice)
+            {
+
+                if (int.TryParse(Console.ReadLine(), out int homeChoice))
+                {
+                    switch (homeChoice)
+                    {
+                        case 1:
+                            Payment();
+                            validChoice = true;
+                            finalbookingdetails (); 
+                            break;
+                        case 2:
+                            Welcome();
+                            validChoice = true;
+                            break;
+                        default:
+                            Console.WriteLine("Invalid choice. Please enter 1 or 2.");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.Write("Invalid input. Please enter a number: ");
+                }
+            } 
+                 
+
+        }
+        static void Incompletebookingdetails ()
+        {
+            
+            
+            Console.Clear();
+
+            finalroom[index-1] = roomchoice;
+
+            Console.WriteLine("");
+            Console.WriteLine("Booking Details : Incomplete ");;
+            Console.WriteLine("Name: " + name[index-1]);
+            Console.WriteLine("Check-in Date: " + startDate[index-1]);
+            Console.WriteLine("Check-out Date: " + endDate[index-1]);
+            Console.WriteLine("Days to stay: " + daysDifference[index-1]);
+            Console.WriteLine("Room Choice: " + roomchoice);
+            Console.WriteLine("Residents: " + adultno[index-1]);
+            Console.WriteLine("Total Cost: " + total[index-1]);
+            Console.WriteLine("");
+            
+        }
+       static void ReserveRoom(int roomIndex, string roomType)
+    {
+        if (rooms[roomIndex])
+        {
+            Console.WriteLine($"The {roomType} room is already reserved. Please choose another room.");
+            Console.ReadLine();
+            RoomType();
+        }
+        else
+        {
+            rooms[roomIndex] = true;
+            Console.WriteLine($"The {roomType} room has been reserved successfully!");
+            Console.ReadLine();
+        }
+    }
     }
 }
