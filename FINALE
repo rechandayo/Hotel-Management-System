@@ -71,89 +71,66 @@ namespace HotelBookingProgram
             }
 
         }
-        static string paymentMethod()
+
+        static void Welcome()
         {
             Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Yellow;
 
-            Console.WriteLine("1. Card");
-            Console.WriteLine("2. Gcash");
-            Console.WriteLine("3. Paypal");
+            Console.WriteLine("*************************************************");
+            Console.WriteLine("*                                               *");
+            Console.WriteLine("*     Welcome to Morada Grand Royal Hotel!      *");
+            Console.WriteLine("*                                               *");
+            Console.WriteLine("*************************************************");
+            Console.ResetColor();
+            Console.ReadKey();
+        }
 
-            Console.Write("Select Payment Method: ");
+        static void homepage()
+        {
 
-            int choice = int.Parse(Console.ReadLine());
-            do
+            Console.Clear();
+
+            Console.WriteLine("How can we help you?");
+
+            bool validChoice = false;
+            Console.WriteLine("\n\n***********************");
+            Console.WriteLine("Navigation Options:");
+            Console.WriteLine("1. Login (Create your account first)");
+            Console.WriteLine("2. Sign Up");
+            Console.WriteLine("***********************");
+            Console.Write("What do you want to do: ");
+
+            while (!validChoice)
             {
-                Console.Write("Enter the number of your payment method choice: ");
+
+                if (int.TryParse(Console.ReadLine(), out int homeChoice))
+                {
+                    switch (homeChoice)
+                    {
+                        case 1:
+                            LoginProcess();
+                            validChoice = true;
+                            break;
+                        case 2:
+                            SignUp();
+                            validChoice = true;
+                            break;
+                        default:
+                            Console.WriteLine("Invalid choice. Please enter 1 or 2.");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.Write("Invalid input. Please enter a number: ");
+                }
             }
-            while (choice < 1 || choice > 3);
-
-            switch (choice)
-            {
-                case 1:
-                    return "Card";
-                case 2:
-                    return "Gcash";
-                case 3:
-                    return "Paypal";
-                default:
-                    return string.Empty;
-            }
-        }
-
-        static void Cardpayment(double total)
-        {
-            Console.Clear();
-            Console.WriteLine("Payment Details: ");
-            Console.Write("Enter your MPIN: ");
-            string creditcardnumber = Console.ReadLine();
-
-            Console.WriteLine($"Credit Card successful! Total amount charged: P{total:F2}\n");
-            Console.ReadKey();
-        }
-
-        static void Paypalpayment(double total)
-        {
-            Console.Clear();
-            Console.WriteLine("Payment Details:");
-            Console.Write("Enter your PayPal email address: ");
-            string paypalEmail = Console.ReadLine();
-
-            Console.WriteLine($"PayPal Payment successful! Total amount charged: P{total:F2}\n");
-            Console.ReadKey();
-        }
-
-        static void gcashpayment(double total)
-        {
-            Console.Clear();
-            Console.WriteLine("Payment Details:");
-            Console.Write("Enter your name: ");
-            string gcashname = Console.ReadLine();
-            Console.Write("\nEnter your GCash mobile number: ");
-            string gcashNumber = Console.ReadLine();
-
-            Console.WriteLine($"GCash Payment successful! Total amount charged: P{total:F2}\n");
-            Console.ReadKey();
-        }
-
-        static void showguidelines()
-        {
-            Console.Clear();
-
-            Console.WriteLine("\nHere are some guidelines to make your stay enjoyable:");
-            Console.WriteLine("\n- The tariff is for the room only and is exclusive of any government taxes applicable Meals and other services are available at extra cost. To know your room tariff, please contact the Duty Manager, guest registration forms must be signed on arrivals.");
-            Console.WriteLine("- Bills must be settled on presentation, personal cheques are not accepted..");
-            Console.WriteLine("- You can only bring 2 children per room.");
-            Console.WriteLine("- In the case of default in the payment of dues by a guest, the management shall have the linen on their luggage and belongings, and be entitled to detain the same and to sell or auction such property at any time without reference to the guest. The net sale proceeds will be appropriate towards the amount due by the guest without prejudice to the management's rights to adopt such further recovery proceedings as my be required.");
-            Console.WriteLine("- Please present your ID card, Passport or Temporary Residence Card upon Check-in. By Law visitors must present personal documents for hotel records. These documents will be returned upon departure.");
-            Console.WriteLine("- Check out time is ( mention your checkout time here ) please inform the reception if you wish to retain your room beyond this time. The extension will be given depending on the availability. If the room is available, the normal tariff will be charged. On failure of the guest to vacate the room on expiry or period the management shall have the right to remove the guest and his/her belongings from the room occupied by the Guest.");
-            Console.WriteLine("- Subject to availability of the storage space, the guest can store luggage in the luggage room, at the guest's sole risk as to loss or damage from any cause, Luggage may not be stored for a period of over 30 days.");
-
-            Console.WriteLine("\nThank you for choosing Morada Grand Royal Hotel, have a nice stay!\n");
 
             Console.ReadKey();
         }
 
+       
 
         static void SignUp()
         {
@@ -258,104 +235,6 @@ namespace HotelBookingProgram
             return accounts.ContainsKey(username) && accounts[username] == password;
         }
 
-        static void homepage()
-        {
-
-            Console.Clear();
-
-            Console.WriteLine("How can we help you?");
-
-            bool validChoice = false;
-            Console.WriteLine("\n\n***********************");
-            Console.WriteLine("Navigation Options:");
-            Console.WriteLine("1. Login (Create your account first");
-            Console.WriteLine("2. Sign Up");
-            Console.WriteLine("***********************");
-            Console.Write("What do you want to do: ");
-            
-            while (!validChoice)
-            {
-
-                if (int.TryParse(Console.ReadLine(), out int homeChoice))
-                {
-                    switch (homeChoice)
-                    {
-                        case 1:
-                            LoginProcess();
-                            validChoice = true;
-                            break;
-                        case 2:
-                            SignUp();
-                            validChoice = true;
-                            break;
-                        default:
-                            Console.WriteLine("Invalid choice. Please enter 1 or 2.");
-                            break;
-                    }
-                }
-                else
-                {
-                    Console.Write("Invalid input. Please enter a number: ");
-                }
-            }
-
-            Console.ReadKey();
-        }
-        static void checkin()
-        {
-
-            Console.Clear();
-
-            Console.WriteLine();
-            Console.WriteLine("******************************************");
-            Console.WriteLine("*               Date of Stay             *");
-            Console.WriteLine("******************************************");
-
-            Console.Write("Check-in date (yyyy-MM-dd): ");
-            DateTime startDate = GetValidDateInput();
-
-            Console.Write("Check-out date (yyyy-MM-dd): ");
-            DateTime endDate = GetValidDateInput();
-
-            int daysDifference = (int)(endDate - startDate).TotalDays;
-            Console.WriteLine($"You will be staying for {daysDifference} days.");
-
-            Console.ReadKey();
-        }
-
-        static DateTime GetValidDateInput()
-        {
-            DateTime date;
-            string input;
-
-            do
-            {
-                Console.Write("Enter a valid date (yyyy-MM-dd): ");
-                input = Console.ReadLine();
-
-                if (!DateTime.TryParseExact(input, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out date))
-                {
-                    Console.WriteLine("Invalid input. Please enter a valid date in the format yyyy-MM-dd.");
-                }
-
-            } while (date == DateTime.MinValue);
-
-            return date;
-
-        }
-        static void Welcome()
-        {
-            Console.Clear();
-            Console.ForegroundColor = ConsoleColor.Yellow;
-
-            Console.WriteLine("*************************************************");
-            Console.WriteLine("*                                               *");
-            Console.WriteLine("*     Welcome to Morada Grand Royal Hotel!      *");
-            Console.WriteLine("*                                               *");
-            Console.WriteLine("*************************************************");
-            Console.ResetColor();
-            Console.ReadKey();
-        }
         static void Basicinfo()
         {
             Console.Clear();
@@ -446,8 +325,6 @@ namespace HotelBookingProgram
             } while (!validInput3);
 
         }
-
-
 
         static void RoomType()
         {
@@ -701,6 +578,22 @@ namespace HotelBookingProgram
 
         }
 
+        static void ReserveRoom(int roomIndex, string roomType)
+        {
+            if (rooms[roomIndex])
+            {
+                Console.WriteLine($"The {roomType} room is already reserved. Please choose another room.");
+                Console.ReadLine();
+                RoomType();
+            }
+            else
+            {
+                rooms[roomIndex] = true;
+                Console.WriteLine($"The {roomType} room has been reserved successfully!");
+                Console.ReadLine();
+            }
+        }
+
         static void DateAndCost()
         {
             Console.Clear();
@@ -726,58 +619,71 @@ namespace HotelBookingProgram
             Console.ReadKey();
 
         }
-        static void finalbookingdetails()
+
+        static void checkin()
         {
+
             Console.Clear();
 
-            for (int i = 0; i < index; i++)
-            {
-                finalname[index - 1] = name[index - 1];
-                finalstartDate[index - 1] = startDate[index - 1];
-                finalendDate[index - 1] = endDate[index - 1];
-                finaldaysDifference[index - 1] = daysDifference[index - 1];
-                finalroom[index - 1] = roomchoice;
-                finaladultno[index - 1] = adultno[index - 1];
-                finaltotal[index - 1] = total[index - 1];
-                finalpaymentmeth[index - 1] = paymentmeth[index - 1];
+            Console.WriteLine();
+            Console.WriteLine("******************************************");
+            Console.WriteLine("*               Date of Stay             *");
+            Console.WriteLine("******************************************");
 
+            Console.Write("Check-in date (yyyy-MM-dd): ");
+            DateTime startDate = GetValidDateInput();
 
-                Console.WriteLine("");
-                Console.WriteLine("Booking Details : Complete/Incomplete");
-                Console.WriteLine($"Book #{i + 1} : ");
-                Console.WriteLine("Name: " + finalname[i]);
-                Console.WriteLine("Check-in Date: " + finalstartDate[i]);
-                Console.WriteLine("Check-out Date: " + finalendDate[i]);
-                Console.WriteLine("Days to stay: " + finaldaysDifference[i]);
-                Console.WriteLine("Room Choice: " + finalroom[i]);
-                Console.WriteLine("Residents: " + finaladultno[i]);
-                Console.WriteLine("Total Cost: " + finaltotal[i]);
-                Console.WriteLine("Payment method: " + finalpaymentmeth[i]);
-                Console.WriteLine("");
+            Console.Write("Check-out date (yyyy-MM-dd): ");
+            DateTime endDate = GetValidDateInput();
 
-            }
+            int daysDifference = (int)(endDate - startDate).TotalDays;
+            Console.WriteLine($"You will be staying for {daysDifference} days.");
 
-
+            Console.ReadKey();
         }
 
-        static void Payment()
+        static DateTime GetValidDateInput()
         {
-            paymentmeth[index - 1] = paymentMethod();
+            DateTime date;
+            string input;
 
-            if (paymentmeth[index - 1] == "Card")
+            do
             {
-                Cardpayment(total[index - 1]);
-            }
-            else if (paymentmeth[index - 1] == "Gcash")
-            {
-                gcashpayment(total[index - 1]);
-            }
-            else if (paymentmeth[index - 1] == "Paypal")
-            {
-                Paypalpayment(total[index - 1]);
-            }
+                Console.Write("Enter a valid date (yyyy-MM-dd): ");
+                input = Console.ReadLine();
+
+                if (!DateTime.TryParseExact(input, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out date))
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid date in the format yyyy-MM-dd.");
+                }
+
+            } while (date == DateTime.MinValue);
+
+            return date;
 
         }
+
+        static void Incompletebookingdetails()
+        {
+
+
+            Console.Clear();
+
+            finalroom[index - 1] = roomchoice;
+
+            Console.WriteLine("");
+            Console.WriteLine("Booking Details : "); ;
+            Console.WriteLine("Name: " + name[index - 1]);
+            Console.WriteLine("Check-in Date: " + startDate[index - 1]);
+            Console.WriteLine("Check-out Date: " + endDate[index - 1]);
+            Console.WriteLine("Days to stay: " + daysDifference[index - 1]);
+            Console.WriteLine("Room Choice: " + roomchoice);
+            Console.WriteLine("Residents: " + adultno[index - 1]);
+            Console.WriteLine("Total Cost: " + total[index - 1]);
+            Console.WriteLine("");
+
+        }
+
         static void confirmation()
         {
 
@@ -818,40 +724,142 @@ namespace HotelBookingProgram
 
 
         }
-        static void Incompletebookingdetails()
+
+        static string paymentMethod()
         {
-
-
             Console.Clear();
 
-            finalroom[index - 1] = roomchoice;
+            Console.WriteLine("1. Card");
+            Console.WriteLine("2. Gcash");
+            Console.WriteLine("3. Paypal");
 
-            Console.WriteLine("");
-            Console.WriteLine("Booking Details : "); ;
-            Console.WriteLine("Name: " + name[index - 1]);
-            Console.WriteLine("Check-in Date: " + startDate[index - 1]);
-            Console.WriteLine("Check-out Date: " + endDate[index - 1]);
-            Console.WriteLine("Days to stay: " + daysDifference[index - 1]);
-            Console.WriteLine("Room Choice: " + roomchoice);
-            Console.WriteLine("Residents: " + adultno[index - 1]);
-            Console.WriteLine("Total Cost: " + total[index - 1]);
-            Console.WriteLine("");
+            Console.Write("Select Payment Method: ");
 
+            int choice = int.Parse(Console.ReadLine());
+            do
+            {
+                Console.Write("Enter the number of your payment method choice: ");
+            }
+            while (choice < 1 || choice > 3);
+
+            switch (choice)
+            {
+                case 1:
+                    return "Card";
+                case 2:
+                    return "Gcash";
+                case 3:
+                    return "Paypal";
+                default:
+                    return string.Empty;
+            }
         }
-        static void ReserveRoom(int roomIndex, string roomType)
+
+        static void Payment()
         {
-            if (rooms[roomIndex])
+            paymentmeth[index - 1] = paymentMethod();
+
+            if (paymentmeth[index - 1] == "Card")
             {
-                Console.WriteLine($"The {roomType} room is already reserved. Please choose another room.");
-                Console.ReadLine();
-                RoomType();
+                Cardpayment(total[index - 1]);
             }
-            else
+            else if (paymentmeth[index - 1] == "Gcash")
             {
-                rooms[roomIndex] = true;
-                Console.WriteLine($"The {roomType} room has been reserved successfully!");
-                Console.ReadLine();
+                gcashpayment(total[index - 1]);
             }
+            else if (paymentmeth[index - 1] == "Paypal")
+            {
+                Paypalpayment(total[index - 1]);
+            }
+
         }
+
+        static void Cardpayment(double total)
+        {
+            Console.Clear();
+            Console.WriteLine("Payment Details: ");
+            Console.Write("Enter your MPIN: ");
+            string creditcardnumber = Console.ReadLine();
+
+            Console.WriteLine($"Credit Card successful! Total amount charged: P{total:F2}\n");
+            Console.ReadKey();
+        }
+
+        static void Paypalpayment(double total)
+        {
+            Console.Clear();
+            Console.WriteLine("Payment Details:");
+            Console.Write("Enter your PayPal email address: ");
+            string paypalEmail = Console.ReadLine();
+
+            Console.WriteLine($"PayPal Payment successful! Total amount charged: P{total:F2}\n");
+            Console.ReadKey();
+        }
+
+        static void gcashpayment(double total)
+        {
+            Console.Clear();
+            Console.WriteLine("Payment Details:");
+            Console.Write("Enter your name: ");
+            string gcashname = Console.ReadLine();
+            Console.Write("\nEnter your GCash mobile number: ");
+            string gcashNumber = Console.ReadLine();
+
+            Console.WriteLine($"GCash Payment successful! Total amount charged: P{total:F2}\n");
+            Console.ReadKey();
+        }
+
+        static void finalbookingdetails()
+        {
+            Console.Clear();
+
+            for (int i = 0; i < index; i++)
+            {
+                finalname[index - 1] = name[index - 1];
+                finalstartDate[index - 1] = startDate[index - 1];
+                finalendDate[index - 1] = endDate[index - 1];
+                finaldaysDifference[index - 1] = daysDifference[index - 1];
+                finalroom[index - 1] = roomchoice;
+                finaladultno[index - 1] = adultno[index - 1];
+                finaltotal[index - 1] = total[index - 1];
+                finalpaymentmeth[index - 1] = paymentmeth[index - 1];
+
+
+                Console.WriteLine("");
+                Console.WriteLine("Booking Details : Complete/Incomplete");
+                Console.WriteLine($"Book #{i + 1} : ");
+                Console.WriteLine("Name: " + finalname[i]);
+                Console.WriteLine("Check-in Date: " + finalstartDate[i]);
+                Console.WriteLine("Check-out Date: " + finalendDate[i]);
+                Console.WriteLine("Days to stay: " + finaldaysDifference[i]);
+                Console.WriteLine("Room Choice: " + finalroom[i]);
+                Console.WriteLine("Residents: " + finaladultno[i]);
+                Console.WriteLine("Total Cost: " + finaltotal[i]);
+                Console.WriteLine("Payment method: " + finalpaymentmeth[i]);
+                Console.WriteLine("");
+
+            }
+
+
+        }
+
+       static void showguidelines()
+        {
+            Console.Clear();
+
+            Console.WriteLine("\nHere are some guidelines to make your stay enjoyable:");
+            Console.WriteLine("\n- The tariff is for the room only and is exclusive of any government taxes applicable Meals and other services are available at extra cost. To know your room tariff, please contact the Duty Manager, guest registration forms must be signed on arrivals.");
+            Console.WriteLine("- Bills must be settled on presentation, personal cheques are not accepted..");
+            Console.WriteLine("- You can only bring 2 children per room.");
+            Console.WriteLine("- In the case of default in the payment of dues by a guest, the management shall have the linen on their luggage and belongings, and be entitled to detain the same and to sell or auction such property at any time without reference to the guest. The net sale proceeds will be appropriate towards the amount due by the guest without prejudice to the management's rights to adopt such further recovery proceedings as my be required.");
+            Console.WriteLine("- Please present your ID card, Passport or Temporary Residence Card upon Check-in. By Law visitors must present personal documents for hotel records. These documents will be returned upon departure.");
+            Console.WriteLine("- Check out time is ( mention your checkout time here ) please inform the reception if you wish to retain your room beyond this time. The extension will be given depending on the availability. If the room is available, the normal tariff will be charged. On failure of the guest to vacate the room on expiry or period the management shall have the right to remove the guest and his/her belongings from the room occupied by the Guest.");
+            Console.WriteLine("- Subject to availability of the storage space, the guest can store luggage in the luggage room, at the guest's sole risk as to loss or damage from any cause, Luggage may not be stored for a period of over 30 days.");
+
+            Console.WriteLine("\nThank you for choosing Morada Grand Royal Hotel, have a nice stay!\n");
+
+            Console.ReadKey();
+        }
+
     }
 }
