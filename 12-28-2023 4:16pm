@@ -66,7 +66,7 @@ namespace HotelBookingProgram
 
                 RoomType();
 
-                DateAndCost();
+                DateAndCost(); 
 
                 Incompletebookingdetails();
 
@@ -91,33 +91,37 @@ namespace HotelBookingProgram
 
         static string paymentMethod()
         {
-            Console.Clear();
+        Console.Clear();
 
-            Console.WriteLine("1. Card");
-            Console.WriteLine("2. Gcash");
-            Console.WriteLine("3. Paypal");
+        Console.WriteLine("1. Card");
+        Console.WriteLine("2. Gcash");
+        Console.WriteLine("3. Paypal");
 
+        int choice;
+        do
+        {
             Console.Write("Select Payment Method: ");
+            // Move the parsing inside the loop to update the choice variable
+            choice = int.Parse(Console.ReadLine());
 
-            int choice = int.Parse(Console.ReadLine());
-            do
+            if (choice < 1 || choice > 3)
             {
-                Console.Write("Enter the number of your payment method choice: ");
+                Console.WriteLine("Invalid choice. Please enter a number between 1 and 3.");
             }
-            while (choice < 1 || choice > 3);
+        } while (choice < 1 || choice > 3);
 
-            switch (choice)
-            {
-                case 1:
-                    return "Card";
-                case 2:
-                    return "Gcash";
-                case 3:
-                    return "Paypal";
-                default:
-                    return string.Empty;
-            }
+        switch (choice)
+        {
+            case 1:
+                return "Card";
+            case 2:
+                return "Gcash";
+            case 3:
+                return "Paypal";
+            default:
+                return string.Empty;
         }
+    }
 
         static void Cardpayment(double total)
         {
