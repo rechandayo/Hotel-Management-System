@@ -879,7 +879,7 @@ namespace HotelBookingProgram
         static void ReserveRoom(int roomIndex, string roomType, DateTime[] startDate, DateTime[] endDate)
         {
             
-            if (rooms[index] && !(endDate[index - 1] <= startDate[index - 1] || startDate[index - 1] >= endDate[index - 1]))
+            if (rooms[roomIndex] && !(endDate[index - 1] <= startDate[index - 1] || startDate[index - 1] >= endDate[index - 1]))
             {
                 Console.WriteLine($"The {roomType} room is already reserved. Please choose another room.");
                 Console.ReadLine();
