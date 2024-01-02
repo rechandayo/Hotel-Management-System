@@ -249,10 +249,10 @@ namespace HotelBookingProgram
             Console.Clear();
             Console.WriteLine("\nPlease login to your account.");
 
-            Console.WriteLine("Enter your username:");
+            Console.Write("Enter your username:");
             string enteredUsername = Console.ReadLine();
 
-            Console.WriteLine("Enter your password:");
+            Console.Write("Enter your password:");
             string enteredPassword = Console.ReadLine();
 
 
@@ -778,6 +778,7 @@ namespace HotelBookingProgram
             Console.WriteLine("\n\n\nNavigation Options:");
             Console.WriteLine("1. Proceed to Payment");
             Console.WriteLine("2. Book another");
+            Console.WriteLine("3. Change Booking Details");
 
             Console.Write("What do you want to do: ");
 
@@ -799,6 +800,10 @@ namespace HotelBookingProgram
                             Welcome();
                             validChoice = true;
                             break;
+                        case 3:
+                            Askwhattochange();
+                            validChoice = true;
+                            break;
                         default:
                             Console.WriteLine("Invalid choice. Please enter 1 or 2.");
                             break;
@@ -811,6 +816,45 @@ namespace HotelBookingProgram
             }
 
 
+        }
+        static void Askwhattochange()
+        {
+            Console.WriteLine("What detail do you want to change?");
+            Console.WriteLine("1. Change Basic info");
+            Console.WriteLine("2. Change the Booking Date and Room");
+
+            bool validchoice = false;
+            
+            while (!validchoice)
+            {
+            if (int.TryParse(Console.ReadLine(), out int choice))
+            {
+                switch (choice)
+                {
+                    case 1: 
+                    Basicinfo();
+                    Incompletebookingdetails();
+                    confirmation();
+                    validchoice = true;
+                    break;
+                    case 2:
+                    DateAndCost();
+                    RoomType();
+                    GetTotalPrice();
+                    Incompletebookingdetails();
+                    confirmation();
+                    validchoice = true;
+                    break;
+                    default:
+                    Console.WriteLine("Invalid choice. Please enter 1 or 2.");
+                    break;
+                }
+            }
+            else
+            {
+                Console.Write("Invalid input. Please enter a number: ");
+            }
+            }
         }
         static void Incompletebookingdetails()
         {
@@ -835,7 +879,7 @@ namespace HotelBookingProgram
         static void ReserveRoom(int roomIndex, string roomType, DateTime[] startDate, DateTime[] endDate)
         {
             
-            if (rooms[roomIndex] && !(endDate[index - 1] <= startDate[index - 1] || startDate[index - 1] >= endDate[index - 1]))
+            if (rooms[index] && !(endDate[index - 1] <= startDate[index - 1] || startDate[index - 1] >= endDate[index - 1]))
             {
                 Console.WriteLine($"The {roomType} room is already reserved. Please choose another room.");
                 Console.ReadLine();
@@ -843,7 +887,6 @@ namespace HotelBookingProgram
             }
             else
             {
-                rooms[roomIndex] = true;
                 Console.WriteLine($"The {roomType} room has been reserved successfully!");
                 Console.ReadLine();
             }
