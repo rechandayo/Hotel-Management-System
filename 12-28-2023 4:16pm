@@ -72,8 +72,6 @@ namespace HotelBookingProgram
 
                 Incompletebookingdetails();
 
-                AddFinalPrice();
-
                 confirmation();
 
                 Console.Write("Do you want to book another room? (y/n): ");
@@ -133,6 +131,7 @@ namespace HotelBookingProgram
             Console.Write("Enter your MPIN: ");
             string creditcardnumber = Console.ReadLine();
 
+            Alltotal = total.Sum();
             Console.WriteLine($"Credit Card successful! Total amount charged: P{Alltotal:F2}\n");
             Console.ReadKey();
         }
@@ -144,6 +143,7 @@ namespace HotelBookingProgram
             Console.Write("Enter your PayPal email address: ");
             string paypalEmail = Console.ReadLine();
 
+            Alltotal = total.Sum();
             Console.WriteLine($"PayPal Payment successful! Total amount charged: P{Alltotal:F2}\n");
             Console.ReadKey();
         }
@@ -157,6 +157,7 @@ namespace HotelBookingProgram
             Console.Write("\nEnter your GCash mobile number: ");
             string gcashNumber = Console.ReadLine();
 
+            Alltotal = total.Sum();
             Console.WriteLine($"GCash Payment successful! Total amount charged: P{Alltotal:F2}\n");
             Console.ReadKey();
         }
@@ -844,12 +845,6 @@ namespace HotelBookingProgram
                 Console.ReadLine();
                 RoomType();
             }
-            else if (rooms[roomIndex])
-            {
-                Console.WriteLine($"The {roomType} room is already reserved. Please choose another room.");
-                Console.ReadLine();
-                RoomType();
-            }
             else
             {
                 rooms[roomIndex] = true;
@@ -864,14 +859,6 @@ namespace HotelBookingProgram
             Console.WriteLine($"The total cost for {roomchoice[index - 1]} with {daysDifference[index - 1]} number of days and {adultno[index - 1]} residents is : P" + total[index - 1]);
 
             Console.ReadKey();
-        }
-
-        static void AddFinalPrice()
-        {
-            for (int i = 0; i < index; i++)
-            {
-            Alltotal += total[i];
-            }
         }
     }
 }
