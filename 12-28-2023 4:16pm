@@ -8,7 +8,7 @@ namespace HotelBookingProgram
     class Program
     {
         static Dictionary<string, string> accounts = new Dictionary<string, string>();
-
+        static double Alltotal;
         static int currentpage = 0;
         static string? address, contactNumber, emailAddress, realRoom;
 
@@ -64,14 +64,17 @@ namespace HotelBookingProgram
 
                 Basicinfo();
 
+                DateAndCost(); 
+
                 RoomType();
 
-                DateAndCost(); 
+                GetTotalPrice();
 
                 Incompletebookingdetails();
 
-                confirmation();
+                AddFinalPrice();
 
+                confirmation();
 
                 Console.Write("Do you want to book another room? (y/n): ");
                 retry = char.Parse(Console.ReadLine());
@@ -123,29 +126,29 @@ namespace HotelBookingProgram
         }
     }
 
-        static void Cardpayment(double total)
+        static void Cardpayment(double Alltotal)
         {
             Console.Clear();
             Console.WriteLine("Payment Details: ");
             Console.Write("Enter your MPIN: ");
             string creditcardnumber = Console.ReadLine();
 
-            Console.WriteLine($"Credit Card successful! Total amount charged: P{total:F2}\n");
+            Console.WriteLine($"Credit Card successful! Total amount charged: P{Alltotal:F2}\n");
             Console.ReadKey();
         }
 
-        static void Paypalpayment(double total)
+        static void Paypalpayment(double Alltotal)
         {
             Console.Clear();
             Console.WriteLine("Payment Details:");
             Console.Write("Enter your PayPal email address: ");
             string paypalEmail = Console.ReadLine();
 
-            Console.WriteLine($"PayPal Payment successful! Total amount charged: P{total:F2}\n");
+            Console.WriteLine($"PayPal Payment successful! Total amount charged: P{Alltotal:F2}\n");
             Console.ReadKey();
         }
 
-        static void gcashpayment(double total)
+        static void gcashpayment(double Alltotal)
         {
             Console.Clear();
             Console.WriteLine("Payment Details:");
@@ -154,7 +157,7 @@ namespace HotelBookingProgram
             Console.Write("\nEnter your GCash mobile number: ");
             string gcashNumber = Console.ReadLine();
 
-            Console.WriteLine($"GCash Payment successful! Total amount charged: P{total:F2}\n");
+            Console.WriteLine($"GCash Payment successful! Total amount charged: P{Alltotal:F2}\n");
             Console.ReadKey();
         }
 
@@ -321,28 +324,6 @@ namespace HotelBookingProgram
 
             Console.ReadKey();
         }
-        static void checkin()
-        {
-
-            Console.Clear();
-
-            Console.WriteLine();
-            Console.WriteLine("******************************************");
-            Console.WriteLine("*               Date of Stay             *");
-            Console.WriteLine("******************************************");
-
-            Console.Write("Check-in date (yyyy-MM-dd): ");
-            DateTime startDate = GetValidDateInput();
-
-            Console.Write("Check-out date (yyyy-MM-dd): ");
-            DateTime endDate = GetValidDateInput();
-
-            int daysDifference = (int)(endDate - startDate).TotalDays;
-            Console.WriteLine($"You will be staying for {daysDifference} days.");
-
-            Console.ReadKey();
-        }
-
         static DateTime GetValidDateInput()
         {
             DateTime date;
@@ -739,10 +720,6 @@ namespace HotelBookingProgram
             daysDifference[index - 1] = (int)(endDate[index - 1] - startDate[index - 1]).TotalDays;
             Console.WriteLine($"You will be staying for {daysDifference[index - 1]} days.");
 
-            total[index - 1] = adultno[index - 1] * (daysDifference[index - 1] * costperday);
-
-            Console.WriteLine($"The total cost for {roomchoice[index - 1]} with {daysDifference[index - 1]} number of days and {adultno[index - 1]} residents is : P" + total[index - 1]);
-
             Console.ReadKey();
 
         }
@@ -865,6 +842,7 @@ namespace HotelBookingProgram
             {
                 Console.WriteLine($"The {roomType} room is already reserved. Please choose another room.");
                 Console.ReadLine();
+                RoomType();
             }
             else if (rooms[roomIndex])
             {
@@ -877,6 +855,22 @@ namespace HotelBookingProgram
                 rooms[roomIndex] = true;
                 Console.WriteLine($"The {roomType} room has been reserved successfully!");
                 Console.ReadLine();
+            }
+        }
+        static void GetTotalPrice()
+        {
+            total[index - 1] = adultno[index - 1] * (daysDifference[index - 1] * costperday);
+
+            Console.WriteLine($"The total cost for {roomchoice[index - 1]} with {daysDifference[index - 1]} number of days and {adultno[index - 1]} residents is : P" + total[index - 1]);
+
+            Console.ReadKey();
+        }
+
+        static void AddFinalPrice()
+        {
+            for (int i = 0; i < index; i++)
+            {
+            Alltotal += total[i];
             }
         }
     }
