@@ -887,6 +887,7 @@ namespace HotelBookingProgram
             }
             else
             {
+                rooms[roomIndex] = true;
                 Console.WriteLine($"The {roomType} room has been reserved successfully!");
                 Console.ReadLine();
             }
