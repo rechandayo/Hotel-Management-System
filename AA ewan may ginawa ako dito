@@ -75,7 +75,7 @@ namespace HotelBookingProgram
 
             if (retry != 'y')
             {
-                showguidelines();
+                Console.WriteLine("Enjoy your stay!");
             }
 
         }
@@ -169,6 +169,45 @@ namespace HotelBookingProgram
             Console.WriteLine("- Subject to availability of the storage space, the guest can store luggage in the luggage room, at the guest's sole risk as to loss or damage from any cause, Luggage may not be stored for a period of over 30 days.");
 
             Console.WriteLine("\nThank you for choosing Morada Grand Royal Hotel, have a nice stay!\n");
+
+            Console.WriteLine("Navigation Options:");
+            Console.WriteLine("1. Booking Details.");
+            Console.WriteLine("2. Logout");
+            Console.WriteLine("3. Exit");
+
+            bool validChoice = false;
+            while (!validChoice)
+            {
+
+                if (int.TryParse(Console.ReadLine(), out int homeChoice))
+                {
+                    switch (homeChoice)
+                    {
+                        case 1:
+                            navigatefinaldetails();
+                            validChoice = true;
+                            break;
+                        case 2:
+                            index = 0;
+                            retry = 'y';
+                            validChoice = true;
+                            break;
+                        case 3:
+                            retry = 'n';
+                            validChoice = true;
+                            break;
+                        default:
+                            Console.WriteLine("Invalid choice.");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.Write("Invalid input. Please enter a number: ");
+                }
+            }
+
+
 
             Console.ReadKey();
         }
@@ -731,6 +770,7 @@ namespace HotelBookingProgram
                 finaladultno[i] = adultno[i];
                 finaltotal[i] = total[i];
                 finalpaymentmeth[i] = paymentmeth[i];
+                
 
 
                 Console.WriteLine("");
@@ -747,6 +787,39 @@ namespace HotelBookingProgram
                 Console.WriteLine("");
 
             }
+
+            Console.WriteLine("Navigation Options: ");
+            Console.WriteLine("1. Show Guidelines");
+            Console.WriteLine("2. Exit");
+
+            bool validChoice = false;
+             while (!validChoice)
+            {
+
+                if (int.TryParse(Console.ReadLine(), out int homeChoice))
+                {
+                    switch (homeChoice)
+                    {
+                        case 1:
+                            showguidelines();
+                            validChoice = true;
+                            break;
+                        case 2:
+                            retry = 'n';
+                            Welcome();
+                            validChoice = true;
+                            break;
+                        default:
+                            Console.WriteLine("Invalid choice. Please enter 1 or 2.");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.Write("Invalid input. Please enter a number: ");
+                }
+            }
+
 
             Console.ReadKey();
 
@@ -899,6 +972,71 @@ namespace HotelBookingProgram
             Console.WriteLine($"The total cost for {roomchoice[index - 1]} with {daysDifference[index - 1]} number of days and {adultno[index - 1]} residents is : P" + total[index - 1]);
 
             Console.ReadKey();
+        }
+        static void navigatefinaldetails()
+        {
+            Console.Clear();
+            for (int i = 0; i < index; i++)
+            {
+                finalname[i] = name[i];
+                finalstartDate[i] = startDate[i];
+                finalendDate[i] = endDate[i];
+                finaldaysDifference[i] = daysDifference[i];
+                finalroom[i] = roomchoice[i];
+                finaladultno[i] = adultno[i];
+                finaltotal[i] = total[i];
+                finalpaymentmeth[i] = paymentmeth[i];
+
+
+                Console.WriteLine("");
+                Console.WriteLine("Booking Details : Complete/Incomplete");
+                Console.WriteLine($"Book #{i + 1} : ");
+                Console.WriteLine("Name: " + finalname[i]);
+                Console.WriteLine("Check-in Date: " + finalstartDate[i]);
+                Console.WriteLine("Check-out Date: " + finalendDate[i]);
+                Console.WriteLine("Days to stay: " + finaldaysDifference[i]);
+                Console.WriteLine("Room Choice: " + finalroom[i]);
+                Console.WriteLine("Residents: " + finaladultno[i]);
+                Console.WriteLine("Total Cost: " + finaltotal[i]);
+                Console.WriteLine("Payment method: " + finalpaymentmeth[i]);
+                Console.WriteLine("");
+            }
+
+            Console.WriteLine("Navigation Options: ");
+            Console.WriteLine("1. Show Guidelines");
+            Console.WriteLine("2. Exit");
+
+            bool validChoice = false;
+             while (!validChoice)
+            {
+
+                if (int.TryParse(Console.ReadLine(), out int homeChoice))
+                {
+                    switch (homeChoice)
+                    {
+                        case 1:
+                            showguidelines();
+                            validChoice = true;
+                            break;
+                        case 2:
+                            retry = 'n';
+                            Welcome();
+                            validChoice = true;
+                            break;
+                        default:
+                            Console.WriteLine("Invalid choice. Please enter 1 or 2.");
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.Write("Invalid input. Please enter a number: ");
+                }
+            }
+
+
+
+            Console.ReadLine();
         }
     }
 }
